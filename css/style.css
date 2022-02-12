@@ -25,6 +25,12 @@ body {
     z-index: 1;
 }
 
+#telaFinal {
+    background: url('../img/finish.png');
+    opacity: 0;
+    z-index: -1;
+}
+
 #container {
     position: relative;
     margin: 50px auto;
