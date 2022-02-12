@@ -2,9 +2,10 @@
 
     // Array de Peças
     let pecas = [];
+    let resposta = [];
     let inicioTela = document.querySelector("#telaInicial");
     inicioTela.addEventListener("click", iniciarJogo, false);
-
+    let telaFinal = document.querySelector("#telaFinal");
 
     /**
      * Preenche o array de peças
@@ -18,6 +19,8 @@
             pecas.push(peca);
         }
         pecas.push(null);
+        resposta = pecas;
+
         render();
     }
 
@@ -128,6 +131,34 @@
         }
 
         render();
+
+        if (checaVitoria()) {
+            finalJogo();
+        }
+    }
+
+    /**
+     * Checa se houve vitória
+     */
+    function checaVitoria() {
+        for (var i in pecas) {
+            var a = pecas[i];
+            var b = resposta[i];
+
+            if (a !== b) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function finalJogo() {
+
+        telaFinal.style.opacity = '1';
+        telaFinal.style.zIndex = '1';
+        setTimeout(function(){
+            telaFinal.addEventListener("click", iniciarJogo, false);
+        },500)
     }
 
     init();
