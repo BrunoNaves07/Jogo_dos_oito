@@ -9,10 +9,11 @@
     /**
      * Preenche o array de peças
      */
-    function init(){
+    function init() {
         for (var i = 1; i < 9; i++) {
             var peca = document.querySelector("#n" + i);
             peca.style.background = "url('img/peca_" + i + ".png')";
+            peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar
             
             pecas.push(peca);
         }
@@ -61,7 +62,7 @@
     }
 
     /**
-     * 
+     * Faz a validação do jogo, para que seja possível ser solucionado
      * @param {*} array 
      */
     function validaJogo(array) {
@@ -90,6 +91,42 @@
         this.style.zIndex = '-1';
         this.removeEventListener("click", iniciarJogo, false);
         
+        render();
+    }
+
+    /**
+     * Faz a movimentação da peça
+     */
+    function movePeca() {
+        var index = pecas.indexOf(this);
+        if (index % 3 !== 0) {
+            if (!pecas[index-1]) {
+                pecas[index-1] = this;
+                pecas[index] = null;
+            }
+        }
+
+        if (index % 3 !== 2) {
+            if (!pecas[index+1]) {
+                pecas[index+1] = this;
+                pecas[index] = null;
+            }
+        }
+
+        if (index > 2) {
+            if (!pecas[index-3]) {
+                pecas[index-3] = this;
+                pecas[index] = null;
+            }
+        }
+
+        if (index < 6) {
+            if (!pecas[index+3]) {
+                pecas[index+3] = this;
+                pecas[index] = null;
+            }
+        }
+
         render();
     }
 
