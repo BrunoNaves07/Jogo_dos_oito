@@ -11,18 +11,49 @@
      * Preenche o array de peças
      */
     function init() {
-        for (var i = 1; i < 9; i++) {
-            var peca = document.querySelector("#n" + i);
-            peca.style.background = "url('img/peca_" + i + ".png')";
-            peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar
-            
-            pecas.push(peca);
+        for (var i = 1; i <= 9; i++) {
+            if (i <= 3) {
+                var peca = document.querySelector("#n" + i);
+                peca.style.background = "url('img/peca_" + i + ".png')";
+                peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
+                pecas.push(peca);
+            } else if (i == 4) {
+                peca = document.querySelector("#n" + (i+4));
+                peca.style.background = "url('img/peca_" + (i+4) + ".png')";
+                peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
+                pecas.push(peca);
+            } else if (i == 5) {         
+                pecas.push(null);
+            } else if (i == 6) {
+                peca = document.querySelector("#n" + (i-2));
+                peca.style.background = "url('img/peca_" + (i-2) + ".png')";
+                peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
+                pecas.push(peca);
+            } else if (i == 9) {
+                peca = document.querySelector("#n" + (i-4));
+                peca.style.background = "url('img/peca_" + (i-4) + ".png')";
+                peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
+                pecas.push(peca);
+            } else if (i == 8) {
+                peca = document.querySelector("#n" + (i-2));
+                peca.style.background = "url('img/peca_" + (i-2) + ".png')";
+                peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
+                pecas.push(peca);
+            } else if (i == 7) {
+                peca = document.querySelector("#n" + (i));
+                peca.style.background = "url('img/peca_" + (i) + ".png')";
+                peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
+                pecas.push(peca);
+            }
         }
-        pecas.push(null);
-        resposta = pecas;
 
+       // pecas.push(null);
+        resposta = pecas;
         render();
     }
+
+
+
 
     /**
      * Desenha as peças na tela
@@ -51,37 +82,16 @@
     function randomSort(arrayAnterior) {
         var arrayNovo;
         
-        do {
-            arrayNovo = [];
-            while (arrayNovo.length < arrayAnterior.length) {
-                var i = Math.floor(Math.random()*arrayAnterior.length); // retorna um valor entre 0 a 8
-                if (arrayNovo.indexOf(arrayAnterior[i]) < 0) {
-                    arrayNovo.push(arrayAnterior[i]);
-                }
+        arrayNovo = [];
+        while (arrayNovo.length < arrayAnterior.length) {
+            var i = Math.floor(Math.random()*arrayAnterior.length); // retorna um valor entre 0 a 8
+            if (arrayNovo.indexOf(arrayAnterior[i]) < 0) {
+                arrayNovo.push(arrayAnterior[i]);
             }
-        } while (!validaJogo(arrayNovo));
+        }
 
         return arrayNovo;
     }
-
-    /**
-     * Faz a validação do jogo, para que seja possível ser solucionado
-     * @param {*} array 
-     */
-    function validaJogo(array) {
-        var inversao = 0;
-        var tam = array.length;
-
-        for (var i = 0; i < tam - 1; i++) {
-            for (var j = i+1; j < tam; j++) {
-                if (array[i] && array[j] && array[i].dataset.valor < array[j].dataset.valor) {
-                    inversao++;
-                }
-            }
-        }
-        return inversao%2 === 0;
-    }
-
 
     /**
      * Inicia o Jogo
