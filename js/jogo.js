@@ -121,10 +121,23 @@
         }
 
         render();
+        console.log(convertePecasParaMatriz());
 
         if (checaVitoria()) {
             finalJogo();
         }
+    }
+
+    /**
+     * Converte pecas para matriz
+     */
+    function convertePecasParaMatriz() {
+        const matriz = [[],[],[]];
+
+        for (var i in pecas) {
+            matriz[parseInt(i/3)].push(pecas[i] ? parseInt(pecas[i].id[1]) : 0);
+        }
+        return matriz;
     }
 
     /**
@@ -141,6 +154,7 @@
         }
         return true;
     }
+
 
     function finalJogo() {
 
