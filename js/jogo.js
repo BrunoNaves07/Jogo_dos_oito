@@ -2,14 +2,13 @@
 
     // Array de Peças
     let entradas = [1,2,3,8,0,4,7,6,5];
+    let saidas = [];
     let pecas = [];
     let resposta = [];
     let inicioTela = document.querySelector("#telaInicial");
     inicioTela.addEventListener("click", iniciarJogo, false);
     let telaFinal = document.querySelector("#telaFinal");
-
-    console.log(entradas);
-
+console.log(entradas);
     /**
      * Preenche o array de peças
      */
@@ -29,10 +28,9 @@
         });
 
         resposta = pecas;
+
         render();
     }
-
-
 
 
     /**
@@ -70,6 +68,15 @@
             }
         }
 
+        for (var i = 0; i < arrayNovo.length; i++) {
+            if (typeof arrayNovo[i] === 'undefined') {
+                saidas[i] = 0;
+            } else {
+                saidas[i] = parseInt(arrayNovo[i].dataset.valor);
+            }
+            
+        }
+        console.log(saidas);
         return arrayNovo;
     }
 
@@ -150,6 +157,25 @@
             telaFinal.addEventListener("click", iniciarJogo, false);
         },500)
     }
+
+    /**
+     * Busca em Largura
+     */
+    function bfs() {
+        var tam = saidas.length;
+        grafo = new Array(tam);
+
+        for (var i = 0; i < tam; i++) {
+            for (var j = 0; j < tam; j++) {
+                grafo[i][j] = 0;
+            }
+        }
+    }
+
+
+
+
+
 
     init();
 
