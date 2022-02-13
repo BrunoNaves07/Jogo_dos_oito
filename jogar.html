@@ -13,19 +13,39 @@
   <body>
     
     <div class="container-fluid">
-        <div id="container" class="painel">
-            <div id="n1" class="peca" data-valor="1"></div>
-            <div id="n2" class="peca" data-valor="2"></div>
-            <div id="n3" class="peca" data-valor="3"></div>
-            <div id="n4" class="peca" data-valor="4"></div>
-            <div id="n5" class="peca" data-valor="5"></div>
-            <div id="n6" class="peca" data-valor="6"></div>
-            <div id="n7" class="peca" data-valor="7"></div>
-            <div id="n8" class="peca" data-valor="8"></div>
+      <div class="row">
+        <div class="col">
+          <div id="container" class="painel">
+              <div id="n1" class="peca" data-valor="1"></div>
+              <div id="n2" class="peca" data-valor="2"></div>
+              <div id="n3" class="peca" data-valor="3"></div>
+              <div id="n4" class="peca" data-valor="4"></div>
+              <div id="n5" class="peca" data-valor="5"></div>
+              <div id="n6" class="peca" data-valor="6"></div>
+              <div id="n7" class="peca" data-valor="7"></div>
+              <div id="n8" class="peca" data-valor="8"></div>
 
-            <div id="telaInicial" class="painel modalTela"></div>
-            <div id="telaFinal" class="painel modalTela"></div>
+              <div id="telaInicial" class="painel modalTela"></div>
+              <div id="telaFinal" class="painel modalTela"></div>
+          </div>
         </div>
+        <div class="col">
+          <div class="coluna-opcoes">
+            <div class="row">            
+              <div class="col">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Escolha o método de busca</option>
+                  <option value="1">BFS</option>
+                  <option value="2">A*</option>                
+                </select>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-primary" id="btn-entrada">Montar Jogo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->

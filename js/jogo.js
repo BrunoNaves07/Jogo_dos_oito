@@ -1,53 +1,33 @@
 (function() {
 
     // Array de Peças
+    let entradas = [1,2,3,8,0,4,7,6,5];
     let pecas = [];
     let resposta = [];
     let inicioTela = document.querySelector("#telaInicial");
     inicioTela.addEventListener("click", iniciarJogo, false);
     let telaFinal = document.querySelector("#telaFinal");
 
+    console.log(entradas);
+
     /**
      * Preenche o array de peças
      */
     function init() {
-        for (var i = 1; i <= 9; i++) {
-            if (i <= 3) {
-                var peca = document.querySelector("#n" + i);
-                peca.style.background = "url('img/peca_" + i + ".png')";
-                peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
+
+        entradas.forEach(function(e) {
+
+            if (e == 0) {        
                 pecas.push(peca);
-            } else if (i == 4) {
-                peca = document.querySelector("#n" + (i+4));
-                peca.style.background = "url('img/peca_" + (i+4) + ".png')";
-                peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
-                pecas.push(peca);
-            } else if (i == 5) {         
-                pecas.push(null);
-            } else if (i == 6) {
-                peca = document.querySelector("#n" + (i-2));
-                peca.style.background = "url('img/peca_" + (i-2) + ".png')";
-                peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
-                pecas.push(peca);
-            } else if (i == 9) {
-                peca = document.querySelector("#n" + (i-4));
-                peca.style.background = "url('img/peca_" + (i-4) + ".png')";
-                peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
-                pecas.push(peca);
-            } else if (i == 8) {
-                peca = document.querySelector("#n" + (i-2));
-                peca.style.background = "url('img/peca_" + (i-2) + ".png')";
-                peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
-                pecas.push(peca);
-            } else if (i == 7) {
-                peca = document.querySelector("#n" + (i));
-                peca.style.background = "url('img/peca_" + (i) + ".png')";
+            } else {
+                var peca = document.querySelector("#n" + e);
+                peca.style.background = "url('img/peca_" + e + ".png')";
                 peca.addEventListener("click", movePeca, false); // chama a movimentação da peça ao clicar            
                 pecas.push(peca);
             }
-        }
 
-       // pecas.push(null);
+        });
+
         resposta = pecas;
         render();
     }
