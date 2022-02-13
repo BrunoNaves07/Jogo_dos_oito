@@ -133,6 +133,7 @@
 
         render();
         console.log(convertePecasParaMatriz(pecas));
+        console.log(manhattan(estadoFinal, convertePecasParaMatriz(pecas)));
 
         if (checaVitoria()) {
             finalJogo();
@@ -149,6 +150,34 @@
             matriz[parseInt(i/3)].push(pecas[i] ? parseInt(pecas[i].id[1]) : 0);
         }
         return matriz;
+    }
+
+    /**
+     * Retorna a soma das distâncias entre cada peça e o seu local ideal
+     */
+    function manhattan(matrizDesejada, matrizAtual) {
+        let peso = 0;
+
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                posicaoDaPeca = localizarPeca(matrizDesejada[i][j], matrizAtual);
+                peso += Math.abs(posicaoDaPeca[0] - i) + Math.abs(posicaoDaPeca[1] - j);
+            }
+        }
+
+        return peso;
+    }
+
+    /**
+     * Localiza a posição da peça na matriz
+     */
+    function localizarPeca(numeroPeca, matrizAtual) {
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                if (matrizAtual[i][j] == numeroPeca)
+                    return [i, j];
+            }
+        }
     }
 
     /**
