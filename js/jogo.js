@@ -5,10 +5,11 @@
     let saidas = [];
     let pecas = [];
     let resposta = [];
+    let estadoInicial, estadoFinal;
     let inicioTela = document.querySelector("#telaInicial");
     inicioTela.addEventListener("click", iniciarJogo, false);
     let telaFinal = document.querySelector("#telaFinal");
-console.log(entradas);
+
     /**
      * Preenche o array de peças
      */
@@ -27,6 +28,8 @@ console.log(entradas);
 
         });
 
+        estadoFinal = convertePecasParaMatriz(pecas);
+        console.log(estadoFinal);
         resposta = pecas;
 
         render();
@@ -76,7 +79,8 @@ console.log(entradas);
             }
             
         }
-        console.log(saidas);
+        estadoInicial = convertePecasParaMatriz(arrayNovo);
+        console.log(estadoInicial);
         return arrayNovo;
     }
 
@@ -128,7 +132,7 @@ console.log(entradas);
         }
 
         render();
-        console.log(convertePecasParaMatriz());
+        console.log(convertePecasParaMatriz(pecas));
 
         if (checaVitoria()) {
             finalJogo();
@@ -138,7 +142,7 @@ console.log(entradas);
     /**
      * Converte pecas para matriz
      */
-    function convertePecasParaMatriz() {
+    function convertePecasParaMatriz(pecas) {
         const matriz = [[],[],[]];
 
         for (var i in pecas) {
@@ -171,23 +175,6 @@ console.log(entradas);
             telaFinal.addEventListener("click", iniciarJogo, false);
         },500)
     }
-
-    /**
-     * Busca em Largura
-     */
-    function bfs() {
-        var tam = saidas.length;
-        grafo = new Array(tam);
-
-        for (var i = 0; i < tam; i++) {
-            for (var j = 0; j < tam; j++) {
-                grafo[i][j] = 0;
-            }
-        }
-    }
-
-
-
 
 
 
