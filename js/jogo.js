@@ -29,7 +29,7 @@
         });
 
         estadoFinal = convertePecasParaMatriz(pecas);
-        console.log(estadoFinal);
+        // console.log(estadoFinal);
         resposta = pecas;
 
         render();
@@ -80,7 +80,7 @@
             
         }
         estadoInicial = convertePecasParaMatriz(arrayNovo);
-        console.log(estadoInicial);
+        // console.log(estadoInicial);
         return arrayNovo;
     }
 
@@ -90,6 +90,7 @@
     function iniciarJogo() {
         // Embaralha as Peças
         pecas = randomSort(pecas);
+        movimentosPossiveis(convertePecasParaMatriz(pecas));
 
         this.style.opacity = '0';
         this.style.zIndex = '-1';
@@ -103,6 +104,7 @@
      */
     function movePeca() {
         var index = pecas.indexOf(this);
+
         if (index % 3 !== 0) {
             if (!pecas[index-1]) {
                 pecas[index-1] = this;
@@ -132,8 +134,9 @@
         }
 
         render();
-        console.log(convertePecasParaMatriz(pecas));
-        console.log(manhattan(estadoFinal, convertePecasParaMatriz(pecas)));
+        // console.log(convertePecasParaMatriz(pecas));
+        // console.log(manhattan(estadoFinal, convertePecasParaMatriz(pecas)));
+
 
         if (checaVitoria()) {
             finalJogo();
@@ -174,10 +177,57 @@
     function localizarPeca(numeroPeca, matrizAtual) {
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 3; j++) {
-                if (matrizAtual[i][j] == numeroPeca)
+                if (matrizAtual[i][j] === numeroPeca)
                     return [i, j];
             }
         }
+    }
+
+    function movimentosPossiveis(matrizAtual) {
+        const posicao = localizarPeca(0, matrizAtual);
+        const i = posicao[0];
+        const j = posicao[1];
+
+        var matrizesPossiveis = [];
+
+        if (i > 0) {
+            var copiaMatriz = copiarMatriz(matrizAtual);
+            copiaMatriz[i][j] = copiaMatriz[i-1][j];
+            copiaMatriz[i-1][j] = 0;
+            matrizesPossiveis.push(copiaMatriz);
+        }
+
+        if (i < 2) {
+            var copiaMatriz = copiarMatriz(matrizAtual);
+            copiaMatriz[i][j] = copiaMatriz[i+1][j];
+            copiaMatriz[i+1][j] = 0;
+            matrizesPossiveis.push(copiaMatriz);
+        }
+
+        if (j > 0) {
+            var copiaMatriz = copiarMatriz(matrizAtual);
+            copiaMatriz[i][j] = copiaMatriz[i][j-1];
+            copiaMatriz[i][j-1] = 0;
+            matrizesPossiveis.push(copiaMatriz);
+        }
+
+        if (j < 2) {
+            var copiaMatriz = copiarMatriz(matrizAtual);
+            copiaMatriz[i][j] = copiaMatriz[i][j+1];
+            copiaMatriz[i][j+1] = 0;
+            matrizesPossiveis.push(copiaMatriz);
+        }
+
+        console.log('Movimentos possíveis: ', matrizesPossiveis);
+    }
+
+    function copiarMatriz (matrizOriginal) {
+        var novaMatriz = [[], [], []];
+        novaMatriz[0] = [...matrizOriginal[0]];
+        novaMatriz[1] = [...matrizOriginal[1]];
+        novaMatriz[2] = [...matrizOriginal[2]];
+
+        return novaMatriz;
     }
 
     /**
