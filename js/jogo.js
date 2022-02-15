@@ -90,7 +90,7 @@
     function iniciarJogo() {
         // Embaralha as Peças
         pecas = randomSort(pecas);
-        movimentosPossiveis(convertePecasParaMatriz(pecas));
+        montaArvore(convertePecasParaMatriz(pecas));
 
         this.style.opacity = '0';
         this.style.zIndex = '-1';
@@ -183,6 +183,9 @@
         }
     }
 
+    /**
+     * Gera lista de matrizes possíveis a partir da matriz atual
+     */
     function movimentosPossiveis(matrizAtual) {
         const posicao = localizarPeca(0, matrizAtual);
         const i = posicao[0];
@@ -218,7 +221,7 @@
             matrizesPossiveis.push(copiaMatriz);
         }
 
-        console.log('Movimentos possíveis: ', matrizesPossiveis);
+        return matrizesPossiveis;
     }
 
     function copiarMatriz (matrizOriginal) {
@@ -228,6 +231,100 @@
         novaMatriz[2] = [...matrizOriginal[2]];
 
         return novaMatriz;
+    }
+
+
+    /**
+     * Monta arvore
+     */
+    function montaArvore (matrizInicial) {
+        let idNohs = 0;
+        let listaAberta = [];
+        let listaFechada = [];
+
+        // const raiz = criaNoh(0, -1, 0, matrizInicial);
+        // descomentar a linha acima e comentar as duas linhas abaixo para o funcionamento real
+        teste = [[1, 2, 3], [8, 4, 5], [7, 0, 6]];
+        const raiz = criaNoh(0, -1, 0, teste);
+        
+        listaAberta.push(raiz);
+
+        let nohMenorScore = encontraMenorScore(listaAberta);
+
+        while (manhattan(estadoFinal, nohMenorScore.matriz) !== 0 && idNohs < 100000) {
+            for (var i = 0; i < listaAberta.length; i++) {
+                if (listaAberta[i].id === nohMenorScore.id) {
+                    listaAberta.splice(i, 1);
+                }
+            }
+
+            listaFechada.push(nohMenorScore);
+            const possiveisJogadas = movimentosPossiveis(nohMenorScore.matriz);
+            
+            for (var i = 0; i < possiveisJogadas.length; i++) {
+                idNohs += 1;
+                const novoNoh = criaNoh(idNohs, nohMenorScore.id, nohMenorScore.nivel + 1, possiveisJogadas[i]);
+                listaAberta.push(novoNoh);
+            }
+
+            nohMenorScore = encontraMenorScore(listaAberta);
+        }
+
+        if (manhattan(estadoFinal, nohMenorScore.matriz) === 0) {
+            var caminho = [nohMenorScore.matriz];
+            let nohPai = nohMenorScore;
+
+            while (nohPai.idPai !== -1) {
+                nohPai = testeDePaternidade(listaFechada, nohPai.idPai);
+                caminho.push(nohPai.matriz);
+            }
+
+            console.log('resolveu', caminho.reverse());
+        }
+        else
+            console.log('não resolveu');
+    }
+
+    /**
+     * Cria um nó
+     */
+    function criaNoh (id, idPai, nivel, matriz) {
+        const noh = {
+            id: id,
+            idPai: idPai,
+            nivel: nivel,
+            matriz: matriz,
+            manhattanScore: manhattan(estadoFinal, matriz),
+            score: manhattan(estadoFinal, matriz) + nivel,
+        };
+
+        return noh;
+    }
+
+    /**
+     * Encontra nó de menor score
+     */
+    function encontraMenorScore (listaAberta) {
+        let menorScore = 9999999;
+        let indiceMenorScore = -1;
+        
+        for (var i = 0; i < listaAberta.length; i++) {
+            if (listaAberta[i].score < menorScore) {
+                menorScore = listaAberta[i].score;
+                indiceMenorScore = i;
+            }
+        }
+
+        return listaAberta[indiceMenorScore];
+    }
+
+    /**
+     * Localiza o nó pai na lista de nós visitados
+     */
+    function testeDePaternidade (listaFechada, idPai) {
+        for (var i = 0; i < listaFechada.length; i++) {
+            if (listaFechada[i].id === idPai) return listaFechada[i];
+        }
     }
 
     /**
